@@ -1,32 +1,50 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-main>
+      <div>
+        <v-card
+          class="mx-auto overflow-hidden"
+        >
+          <v-app-bar
+            color='green'
+            dark
+          >
+            <v-toolbar-title>Nom que tu veux</v-toolbar-title>
+
+            <v-spacer></v-spacer>
+
+            <v-btn icon @click.stop="drawer = !drawer">
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+
+            <template v-slot:extension>
+              <v-tabs
+                align-with-title
+              >
+                <v-tab v-for="(t,index) in $store.state.titles" :key="index" :style="{margin : '20px'}" @click="$router.push({path:t.path})">
+                  {{ t.text }}
+                </v-tab>
+                <v-tabs-slider color="blue"></v-tabs-slider>
+              </v-tabs>
+            </template>
+          </v-app-bar>
+        </v-card>
+      </div>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
 
-nav {
-  padding: 30px;
-}
+export default {
+  name: 'App',
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+  data: () => {
+    return {
+      drawer: false,
+      group: null
+    }
+  }
 }
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>
