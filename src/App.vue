@@ -9,7 +9,7 @@
             color='green'
             dark
           >
-            <v-toolbar-title>Nom que tu veux</v-toolbar-title>
+            <v-toolbar-title>Projet Papa</v-toolbar-title>
 
             <v-spacer></v-spacer>
 

@@ -9,9 +9,6 @@ module.exports = (sequelize, Sequelize) => {
     avis: {
       type: Sequelize.BOOLEAN
     },
-    nom: {
-      type: Sequelize.STRING
-    },
     description: {
       type: Sequelize.STRING
     },

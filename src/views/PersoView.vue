@@ -133,10 +133,10 @@ export default {
         const second = tache.dateFin
 
         events.push({
-          name: tache.numero + ' : ' + tache.nom,
+          name: tache.numero + ' : ' + tache.ressources,
           start: first,
           end: second,
-          color: this.colors[this.rnd(0, this.colors.length - 1)],
+          color: this.colors[tache.id % 30],
           timed: !allDay
         })
       })

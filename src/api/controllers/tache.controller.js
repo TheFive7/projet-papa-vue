@@ -5,8 +5,8 @@ const Op = db.Sequelize.Op
 
 // Retrieve all Tache from the database.
 exports.findAll = (req, res) => {
-  const nom = req.query.nom
-  const condition = nom ? { nom: { [Op.iLike]: `%${nom}%` } } : null
+  const description = req.query.description
+  const condition = description ? { description: { [Op.iLike]: `%${description}%` } } : null
   Tache.findAll({ where: condition })
     .then(data => {
       res.send(data)
@@ -23,7 +23,7 @@ exports.findAll = (req, res) => {
 // Create and Save a new Tache
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.nom) {
+  if (!req.body.description) {
     res.status(400).send({
       message: 'Content can not be empty!'
     })
@@ -34,7 +34,6 @@ exports.create = (req, res) => {
     numero: req.body.numero,
     ordreTravail: req.body.ordreTravail,
     avis: req.body.avis,
-    nom: req.body.nom,
     description: req.body.description,
     dateDebut: req.body.dateDebut,
     dateFin: req.body.dateFin,

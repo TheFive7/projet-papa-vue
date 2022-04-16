@@ -39,27 +39,6 @@
         <v-checkbox v-model="item.avis" disabled></v-checkbox>
       </template>
 
-      <!-- NOM -->
-      <template v-slot:[`item.nom`]="{ item }">
-        <v-edit-dialog
-          :return-value.sync="item.nom"
-          @save="saveText(item)"
-          @cancel="cancelText"
-          @open="openText"
-          @close="closeText"
-        >
-          {{ item.nom }}
-          <template v-slot:input>
-            <v-text-field
-              v-model="item.nom"
-              label="Edit"
-              single-line
-              counter
-            ></v-text-field>
-          </template>
-        </v-edit-dialog>
-      </template>
-
       <!-- DESCRIPTION -->
       <template v-slot:[`item.description`]="{ item }">
         <v-edit-dialog
@@ -149,6 +128,64 @@
                   <v-row>
                     <v-col
                       cols="12"
+                      sm="8"
+                      md="10"
+                    >
+                      <v-menu
+                        v-model="menuDateDebut"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="currentItem.dateDebut"
+                            label="Date de début"
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="currentItem.dateDebut"
+                          @input="menuDateDebut = false"
+                        ></v-date-picker>
+                      </v-menu>
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      sm="8"
+                      md="10"
+                    >
+                      <v-menu
+                        v-model="menuDateFin"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="currentItem.dateFin"
+                            label="Date de fin"
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="currentItem.dateFin"
+                          @input="menuDateFin = false"
+                        ></v-date-picker>
+                      </v-menu>
+                    </v-col>
+                    <v-col
+                      cols="12"
                       sm="6"
                       md="4"
                     >
@@ -183,16 +220,6 @@
                       md="4"
                     >
                       <v-text-field
-                        v-model="currentItem.nom"
-                        label="Nom"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
                         v-model="currentItem.description"
                         label="Description"
                       ></v-text-field>
@@ -212,100 +239,6 @@
                         label="Ressources"
                         v-model="choosenRessources"
                       ></v-autocomplete>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="8"
-                      md="10"
-                    >
-                      <v-menu
-                        ref="menu"
-                        v-model="menuDateDebut"
-                        :close-on-content-click="false"
-                        :return-value.sync="currentItem.dateDebut"
-                        transition="scale-transition"
-                        offset-y
-                        min-width="auto"
-                      >
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-text-field
-                            v-model="currentItem.dateDebut"
-                            label="Date de début"
-                            prepend-icon="mdi-calendar"
-                            readonly
-                            v-bind="attrs"
-                            v-on="on"
-                          ></v-text-field>
-                        </template>
-                        <v-date-picker
-                          v-model="currentItem.dateDebut"
-                          no-title
-                          scrollable
-                        >
-                          <v-spacer></v-spacer>
-                          <v-btn
-                            text
-                            color="primary"
-                            @click="menuDateDebut = false"
-                          >
-                            Retour
-                          </v-btn>
-                          <v-btn
-                            text
-                            color="primary"
-                            @click="$refs.menu.save(currentItem.dateDebut)"
-                          >
-                            OK
-                          </v-btn>
-                        </v-date-picker>
-                      </v-menu>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="8"
-                      md="10"
-                    >
-                      <v-menu
-                        ref="menu"
-                        v-model="menuDateFin"
-                        :close-on-content-click="false"
-                        :return-value.sync="currentItem.dateFin"
-                        transition="scale-transition"
-                        offset-y
-                        min-width="auto"
-                      >
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-text-field
-                            v-model="currentItem.dateFin"
-                            label="Date de début"
-                            prepend-icon="mdi-calendar"
-                            readonly
-                            v-bind="attrs"
-                            v-on="on"
-                          ></v-text-field>
-                        </template>
-                        <v-date-picker
-                          v-model="currentItem.dateFin"
-                          no-title
-                          scrollable
-                        >
-                          <v-spacer></v-spacer>
-                          <v-btn
-                            text
-                            color="primary"
-                            @click="menuDateFin = false"
-                          >
-                            Retour
-                          </v-btn>
-                          <v-btn
-                            text
-                            color="primary"
-                            @click="$refs.menu.save(currentItem.dateFin)"
-                          >
-                            OK
-                          </v-btn>
-                        </v-date-picker>
-                      </v-menu>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -392,7 +325,6 @@ export default {
         { text: 'Numéro', align: 'start', value: 'numero' },
         { text: 'OT', value: 'ordreTravail' },
         { text: 'Avis', value: 'avis' },
-        { text: 'Nom', value: 'nom' },
         { text: 'Description', value: 'description' },
         { text: 'Date de début', value: 'dateDebut' },
         { text: 'Date de fin', value: 'dateFin' },
@@ -404,7 +336,6 @@ export default {
         numero: 0,
         ordreTravail: false,
         avis: false,
-        nom: '',
         description: '',
         dateDebut: '',
         dateFin: '',
@@ -415,7 +346,6 @@ export default {
         numero: 0,
         ordreTravail: false,
         avis: false,
-        nom: '',
         description: '',
         dateDebut: '',
         dateFin: '',
@@ -429,10 +359,6 @@ export default {
         .then((response) => {
           // console.log(response.data)
           this.$store.state.taches = response.data.map(this.getDisplayTache)
-          this.$store.state.taches.forEach(e => {
-            this.$store.state.dates.push(e.dateDebut)
-            this.$store.state.dates.push(e.dateFin)
-          })
         })
         .catch((e) => {
           console.log(e)
@@ -463,8 +389,7 @@ export default {
         id: ressource.id,
         nom: ressource.nom,
         prenom: ressource.prenom,
-        description: ressource.description,
-        assignation: ressource.assignation
+        description: ressource.description
       }
     },
 
@@ -479,7 +404,6 @@ export default {
         numero: tache.numero,
         ordreTravail: tache.ordreTravail,
         avis: tache.avis,
-        nom: tache.nom,
         description: tache.description,
         dateDebut: tache.dateDebut,
         dateFin: tache.dateFin,
@@ -525,8 +449,6 @@ export default {
         data.ressources += e + '\n'
       })
       data.numero = parseInt(this.currentItem.numero)
-      data.dateDebut = this.$store.state.dates[0]
-      data.dateFin = this.$store.state.dates[1]
       console.log(data)
       TacheDataService.create(data)
         .then((response) => {

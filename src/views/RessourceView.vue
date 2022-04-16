@@ -71,27 +71,6 @@
         </v-edit-dialog>
       </template>
 
-      <!-- ASSIGNATION -->
-      <template v-slot:[`item.assignation`]="{ item }">
-        <v-edit-dialog
-          :return-value.sync="item.assignation"
-          @save="saveText(item)"
-          @cancel="cancelText"
-          @open="openText"
-          @close="closeText"
-        >
-          {{ item.assignation }}
-          <template v-slot:input>
-            <v-text-field
-              v-model="item.assignation"
-              label="Edit"
-              single-line
-              counter
-            ></v-text-field>
-          </template>
-        </v-edit-dialog>
-      </template>
-
       <template v-slot:top>
         <v-toolbar
           flat
@@ -165,16 +144,6 @@
                       <v-text-field
                         v-model="currentItem.description"
                         label="Description"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="currentItem.assignation"
-                        label="Assignation"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -258,22 +227,19 @@ export default {
         { text: 'Nom', align: 'start', value: 'nom' },
         { text: 'Prénom', value: 'prenom' },
         { text: 'Description', value: 'description' },
-        { text: 'Assignation', value: 'assignation' },
         { text: 'Actions', value: 'actions' }
       ],
       currentItem: {
         id: 0,
         nom: '',
         prenom: '',
-        description: '',
-        assignation: ''
+        description: ''
       },
       defaultItem: {
         id: 0,
         nom: '',
         prenom: '',
-        description: '',
-        assignation: ''
+        description: ''
       }
     }
   },
@@ -298,8 +264,7 @@ export default {
         id: ressource.id,
         nom: ressource.nom,
         prenom: ressource.prenom,
-        description: ressource.description,
-        assignation: ressource.assignation
+        description: ressource.description
       }
     },
 
